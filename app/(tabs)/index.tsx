@@ -1,23 +1,30 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import useTheme from "../../hooks/useTheme";
+import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { createHomeStyles } from "@/assets/styles/home.style.";
+import Header from "@/components/Header";
+import useTheme from "@/hooks/useTheme";
 
 // rnfe
 export default function Index() {
-  const { toggleDarkMode } = useTheme();
-  return (
-    <View style={style.container}>
-      <Text>Test TODO Apps</Text>
+  const { toggleDarkMode, colors } = useTheme();
 
-      <TouchableOpacity onPress={toggleDarkMode}>
-        <Text>Toggle the mode</Text>
-      </TouchableOpacity>
-    </View>
+  const style = createHomeStyles(colors);
+
+  return (
+    <LinearGradient
+      colors={colors.gradients.background}
+      style={style.container}
+    >
+      <StatusBar barStyle={colors.statusBarStyle} />
+      <SafeAreaView style={style.safeArea}>
+        <Header />
+
+        <TouchableOpacity onPress={toggleDarkMode}>
+          <Text>Toggle the mode</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
