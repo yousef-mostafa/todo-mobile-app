@@ -3,6 +3,7 @@ import { StatusBar, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { createHomeStyles } from "@/assets/styles/home.style.";
+import AddTodo from "@/components/AddTodo";
 import Header from "@/components/Header";
 import useTheme from "@/hooks/useTheme";
 
@@ -20,6 +21,7 @@ export default function Index() {
       <StatusBar barStyle={colors.statusBarStyle} />
       <SafeAreaView style={style.safeArea}>
         <Header />
+        <AddTodo />
 
         <TouchableOpacity onPress={toggleDarkMode}>
           <Text>Toggle the mode</Text>
