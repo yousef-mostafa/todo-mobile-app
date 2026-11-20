@@ -1,4 +1,4 @@
-import { ConvexError,v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
 
@@ -35,7 +35,7 @@ export const ToggleTodoIsComplete = mutation({
     if (!selectedTodo) throw new ConvexError("todo item not found");
 
     await ctx.db.patch(args.id, {
-      isCompleted: selectedTodo.isCompleted,
+      isCompleted: !selectedTodo.isCompleted,
     });
   },
 });
