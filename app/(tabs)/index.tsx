@@ -1,6 +1,6 @@
 import { useQuery } from "convex/react";
 import { LinearGradient } from "expo-linear-gradient";
-import { FlatList, StatusBar } from "react-native";
+import { FlatList, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { createHomeStyles } from "@/assets/styles/home.style.";
@@ -23,6 +23,14 @@ export default function Index() {
   const todos: Todo[] | undefined = useQuery(api.todos.getTodos);
   const isLoading = todos === undefined;
 
+  const completedCount = todos
+    ? todos.filter((todo) => todo.isCompleted).length
+    : 0;
+
+  const totalCount = todos ? todos.length : 0;
+  const completedPercentage =
+    totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
+
   if (isLoading)
     return (
       <LoadingSpinner
@@ -39,7 +47,28 @@ export default function Index() {
     >
       <StatusBar barStyle={colors.statusBarStyle} />
       <SafeAreaView style={style.safeArea}>
-        <Header />
+        <Header
+          subtitle={`${completedCount} of ${totalCount} Complete`}
+          title="Today's Tasks"
+          titleIcon="flash-outline"
+        >
+          <View style={style.progressContainer}>
+            <View style={style.progressBarContainer}>
+              <View style={style.progressBar}>
+                <LinearGradient
+                  colors={colors.gradients.success}
+                  style={[
+                    style.progressFill,
+                    { width: `${completedPercentage}%` },
+                  ]}
+                />
+              </View>
+              <Text style={style.progressText}>
+                {Math.round(completedPercentage)} %
+              </Text>
+            </View>
+          </View>
+        </Header>
         <AddTodo />
         <FlatList
           contentContainerStyle={style.todoListContent}
