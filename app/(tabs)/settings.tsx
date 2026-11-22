@@ -1,19 +1,38 @@
-import { StyleSheet,Text, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { createSettingsStyles } from "@/assets/styles/settings.style";
+import DangerZone from "@/components/DangerZone";
+import Header from "@/components/Header";
+import Preferences from "@/components/Preferences";
+import ProgressStats from "@/components/ProgressStats";
+import useTheme from "@/hooks/useTheme";
 
 const SettingsTab = () => {
+  const { colors } = useTheme();
+  const style = createSettingsStyles(colors);
+
   return (
-    <View style={style.container}>
-      <Text>SettingsTab</Text>
-    </View>
+    <LinearGradient
+      colors={colors.gradients.background}
+      style={style.container}
+    >
+      <SafeAreaView style={style.safeArea}>
+        <Header title="Settings" titleIcon="settings" />
+
+        <ScrollView
+          contentContainerStyle={style.content}
+          showsVerticalScrollIndicator={false}
+          style={style.scrollView}
+        >
+          <ProgressStats />
+          <Preferences />
+          <DangerZone />
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
 export default SettingsTab;
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
