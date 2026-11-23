@@ -26,26 +26,26 @@ const Preferences = () => {
 
   const items: PreferenceItem[] = [
     {
-      key: "total",
+      key: "dark-mode",
       color: "primary",
       title: "Dark Mode",
-      icon: "list",
+      icon: "moon-outline",
       value: isDarkMode,
       onChange: toggleDarkMode,
     },
     {
-      key: "completed",
+      key: "notifications",
       color: "success",
       title: "Notifications",
-      icon: "checkmark-circle",
+      icon: "notifications-outline",
       value: isNotificationsEnabled,
       onChange: () => setIsNotificationsEnabled((current) => !current),
     },
     {
-      key: "active",
+      key: "auto-sync",
       color: "warning",
       title: "Auto Sync",
-      icon: "time",
+      icon: "sync-outline",
       value: isAutoSync,
       onChange: () => setIsAutoSync((current) => !current),
     },
@@ -58,8 +58,14 @@ const Preferences = () => {
     >
       <Text style={settingsStyles.sectionTitle}>Preferences</Text>
 
-      {items.map((item) => (
-        <View key={item.key} style={settingsStyles.settingItem}>
+      {items.map((item, index) => (
+        <View
+          key={item.key}
+          style={[
+            settingsStyles.settingItem,
+            index === items.length - 1 && { borderBottomWidth: 0 },
+          ]}
+        >
           <View style={settingsStyles.settingLeft}>
             <LinearGradient
               colors={colors.gradients[item.color]}

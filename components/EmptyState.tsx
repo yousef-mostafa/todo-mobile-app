@@ -1,5 +1,5 @@
+import { ComponentProps } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import type { ComponentProps } from "react";
 import { Text, View } from "react-native";
 
 import { createHomeStyles } from "@/assets/styles/home.style.";
@@ -24,11 +24,12 @@ const EmptyState = ({ icon = "ban-outline", title, subtitle }: Props) => {
         colors={colors.gradients.empty}
         style={homeStyles.emptyIconContainer}
       >
-        <Ionicons color={colors.textMuted} name={icon} size={60} />
+        <Ionicons color={colors.textSecondary} name={icon} size={48} />
       </LinearGradient>
       <Text style={homeStyles.emptyText}>{title}</Text>
       {subtitle && <Text style={homeStyles.emptySubtext}>{subtitle}</Text>}
     </View>
   );
 };
+
 export default EmptyState;

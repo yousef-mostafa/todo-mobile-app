@@ -26,7 +26,7 @@ const Header = ({ title, titleIcon, subtitle, children }: Props) => {
           colors={colors.gradients.primary}
           style={style.iconContainer}
         >
-          <Ionicons color={"#fff"} name={titleIcon} size={28} />
+          <Ionicons color={"#fff"} name={titleIcon} size={24} />
         </LinearGradient>
 
         <View style={style.titleTextContainer}>

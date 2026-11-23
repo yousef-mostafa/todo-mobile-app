@@ -44,7 +44,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
     } catch (error) {
       Alert.alert(
         "Error",
-        `Failed to ${item.isCompleted ? "make task as todo" : "complete task"}: ` +
+        `Failed to ${item.isCompleted ? "mark task as active" : "complete task"}: ` +
           error,
       );
     } finally {
@@ -55,12 +55,16 @@ const TodoCard = ({ item }: { item: Todo }) => {
   async function handleSaveEdit() {
     setIsLoading(true);
     const trimmedValue = editText.trim();
-    if (trimmedValue === item.text) return;
+    if (trimmedValue === item.text) {
+      setIsEditing(false);
+      setIsLoading(false);
+      return;
+    }
     try {
       await updateTodo({ id: item._id, text: trimmedValue });
       setIsEditing(false);
     } catch (error) {
-      Alert.alert("Error", `Failed to Delete "${item.text}" : \n` + error);
+      Alert.alert("Error", `Failed to update "${item.text}": \n` + error);
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +75,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
     try {
       await deleteTodo({ id: item._id });
     } catch (error) {
-      Alert.alert("Error", `Failed to Delete "${item.text}" : \n` + error);
+      Alert.alert("Error", `Failed to delete "${item.text}": \n` + error);
     } finally {
       setIsLoading(false);
     }
@@ -102,29 +106,37 @@ const TodoCard = ({ item }: { item: Todo }) => {
           style={style.checkbox}
           onPress={handleToggleComplete}
         >
-          <LinearGradient
-            colors={
-              item.isCompleted
-                ? colors.gradients.success
-                : colors.gradients.muted
-            }
-            style={[
-              style.checkboxInner,
-              { borderColor: item.isCompleted ? "transparent" : colors.border },
-            ]}
-          >
-            {item.isCompleted && (
-              <Ionicons color="#fff" name="checkmark" size={18} />
-            )}
-          </LinearGradient>
+          {item.isCompleted ? (
+            <LinearGradient
+              colors={
+                item.isCompleted
+                  ? colors.gradients.success
+                  : colors.gradients.muted
+              }
+              style={[
+                style.checkboxInner,
+                {
+                  borderColor: item.isCompleted ? "transparent" : colors.border,
+                },
+              ]}
+            >
+              {item.isCompleted && (
+                <Ionicons color="#fff" name="checkmark" size={14} />
+              )}
+            </LinearGradient>
+          ) : (
+            <View
+              style={[style.checkboxInner, { borderColor: colors.border }]}
+            />
+          )}
         </TouchableOpacity>
+
         {isEditing ? (
           <View style={style.editContainer}>
             <TextInput
               autoFocus
-              multiline
-              placeholder="Edit your todo..."
-              placeholderTextColor={colors.textMuted}
+              placeholder="Edit your task..."
+              placeholderTextColor={colors.textSecondary}
               style={style.editInput}
               value={editText}
               onChangeText={setEditText}
@@ -132,10 +144,10 @@ const TodoCard = ({ item }: { item: Todo }) => {
             <View style={style.editButtons}>
               <TouchableOpacity activeOpacity={0.8} onPress={handleSaveEdit}>
                 <LinearGradient
-                  colors={colors.gradients.success}
+                  colors={colors.gradients.primary}
                   style={style.editButton}
                 >
-                  <Ionicons color="#fff" name="checkmark" size={16} />
+                  <Ionicons color="#fff" name="checkmark" size={14} />
                   <Text style={style.editButtonText}>Save</Text>
                 </LinearGradient>
               </TouchableOpacity>
@@ -151,7 +163,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
                   colors={colors.gradients.muted}
                   style={style.editButton}
                 >
-                  <Ionicons color="#fff" name="close" size={16} />
+                  <Ionicons color="#fff" name="close" size={14} />
                   <Text style={style.editButtonText}>Cancel</Text>
                 </LinearGradient>
               </TouchableOpacity>
@@ -162,43 +174,43 @@ const TodoCard = ({ item }: { item: Todo }) => {
             <Text
               style={[
                 style.todoText,
-                item.isCompleted && {
-                  textDecorationLine: "line-through",
-                  color: colors.textMuted,
-                  opacity: 0.6,
-                },
+                item.isCompleted && style.todoTextCompleted,
               ]}
             >
               {item.text}
+              {isLoading && (
+                <ActivityIndicator color={colors.primary} size="small" />
+              )}
             </Text>
-
-            <View style={style.todoActions}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => setIsEditing(true)}
-              >
-                <LinearGradient
-                  colors={colors.gradients.warning}
-                  style={style.actionButton}
-                >
-                  <Ionicons color="#fff" name="pencil" size={14} />
-                </LinearGradient>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={handleDeleteConfirmationAlert}
-              >
-                <LinearGradient
-                  colors={colors.gradients.danger}
-                  style={style.actionButton}
-                >
-                  <Ionicons color="#fff" name="trash" size={14} />
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
           </View>
         )}
-        {isLoading && <ActivityIndicator color={colors.primary} size="large" />}
+
+        {!isEditing && (
+          <View style={style.todoActions}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setIsEditing(true)}
+            >
+              <LinearGradient
+                colors={colors.gradients.warning}
+                style={style.actionButton}
+              >
+                <Ionicons color="#fff" name="pencil" size={14} />
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={handleDeleteConfirmationAlert}
+            >
+              <LinearGradient
+                colors={colors.gradients.danger}
+                style={style.actionButton}
+              >
+                <Ionicons color="#fff" name="trash" size={14} />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        )}
       </LinearGradient>
     </View>
   );

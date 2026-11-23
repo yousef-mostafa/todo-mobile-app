@@ -19,7 +19,7 @@ const SettingsTab = () => {
       style={style.container}
     >
       <SafeAreaView style={style.safeArea}>
-        <Header title="Settings" titleIcon="settings" />
+        <Header title="Settings" titleIcon="settings-outline" />
 
         <ScrollView
           contentContainerStyle={style.content}

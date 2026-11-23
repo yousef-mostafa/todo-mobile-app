@@ -32,7 +32,6 @@ const DangerZone = () => {
                 `Successfully deleted ${result.deletedCount} todo${result.deletedCount === 1 ? "" : "s"}. Your app has been reset.`,
               );
             } catch {
-              // console.log("Error deleting all todos", error);
               Alert.alert("Error", "Failed to reset app");
             }
           },
@@ -62,7 +61,7 @@ const DangerZone = () => {
           </LinearGradient>
           <Text style={settingsStyles.actionTextDanger}>Reset App</Text>
         </View>
-        <Ionicons color={colors.textMuted} name="chevron-forward" size={18} />
+        <Ionicons color={colors.textSecondary} name="chevron-forward" size={18} />
       </TouchableOpacity>
     </LinearGradient>
   );
