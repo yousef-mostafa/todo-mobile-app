@@ -1,8 +1,8 @@
-import { ComponentProps } from "react";
+import { ComponentProps, useMemo } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import { createHomeStyles } from "@/assets/styles/home.style.";
+import { spacing, typography } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -16,18 +16,50 @@ interface Props {
 const EmptyState = ({ icon = "ban-outline", title, subtitle }: Props) => {
   const { colors } = useTheme();
 
-  const homeStyles = createHomeStyles(colors);
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        emptyContainer: {
+          alignItems: "center",
+          justifyContent: "center",
+          paddingVertical: 64,
+        },
+        emptyIconContainer: {
+          width: 96,
+          height: 96,
+          borderRadius: 48,
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: spacing.lg,
+        },
+        emptyText: {
+          fontSize: typography.sectionTitle.fontSize,
+          fontWeight: typography.sectionTitle.fontWeight,
+          lineHeight: typography.sectionTitle.lineHeight,
+          marginBottom: spacing.xs,
+          color: colors.text,
+        },
+        emptySubtext: {
+          fontSize: typography.bodyMuted.fontSize,
+          lineHeight: typography.bodyMuted.lineHeight,
+          textAlign: "center",
+          paddingHorizontal: spacing["2xl"],
+          color: colors.textSecondary,
+        },
+      }),
+    [colors.textSecondary, colors.text],
+  );
 
   return (
-    <View style={homeStyles.emptyContainer}>
+    <View style={styles.emptyContainer}>
       <LinearGradient
         colors={colors.gradients.empty}
-        style={homeStyles.emptyIconContainer}
+        style={styles.emptyIconContainer}
       >
         <Ionicons color={colors.textSecondary} name={icon} size={48} />
       </LinearGradient>
-      <Text style={homeStyles.emptyText}>{title}</Text>
-      {subtitle && <Text style={homeStyles.emptySubtext}>{subtitle}</Text>}
+      <Text style={styles.emptyText}>{title}</Text>
+      {subtitle && <Text style={styles.emptySubtext}>{subtitle}</Text>}
     </View>
   );
 };

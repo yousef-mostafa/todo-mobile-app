@@ -1,8 +1,9 @@
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode, useMemo } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import { createHomeStyles } from "@/assets/styles/home.style.";
+import { createGlobalStyles } from "@/assets/styles/global.styles";
+import { spacing, typography } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -17,22 +18,48 @@ interface Props {
 const Header = ({ title, titleIcon, subtitle, children }: Props) => {
   const { colors } = useTheme();
 
-  const style = createHomeStyles(colors);
+  const globalStyles = useMemo(() => createGlobalStyles(colors), [colors]);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        header: {
+          paddingHorizontal: spacing.gutter,
+          paddingVertical: spacing.xl,
+          paddingBottom: spacing.base,
+        },
+        title: {
+          fontSize: typography.titleApp.fontSize,
+          fontWeight: typography.titleApp.fontWeight,
+          lineHeight: typography.titleApp.lineHeight,
+          letterSpacing: typography.titleApp.letterSpacing,
+          marginBottom: spacing["2xs"],
+          color: colors.text,
+        },
+        subtitle: {
+          fontSize: typography.bodyMuted.fontSize,
+          fontWeight: typography.bodyMuted.fontWeight,
+          lineHeight: typography.bodyMuted.lineHeight,
+          color: colors.textSecondary,
+        },
+      }),
+    [colors.textSecondary, colors.text],
+  );
 
   return (
-    <View style={style.header}>
-      <View style={style.titleContainer}>
+    <View style={styles.header}>
+      <View style={globalStyles.titleContainer}>
         <LinearGradient
           colors={colors.gradients.primary}
-          style={style.iconContainer}
+          style={globalStyles.iconContainer}
         >
           <Ionicons color={"#fff"} name={titleIcon} size={24} />
         </LinearGradient>
 
-        <View style={style.titleTextContainer}>
-          <Text style={style.title}>{title}</Text>
+        <View style={globalStyles.fullWidthContainer}>
+          <Text style={styles.title}>{title}</Text>
 
-          {subtitle && <Text style={style.subtitle}>{subtitle}</Text>}
+          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
       </View>
 

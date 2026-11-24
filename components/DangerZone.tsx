@@ -1,8 +1,10 @@
+import { useMemo } from "react";
 import { useMutation } from "convex/react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { createSettingsStyles } from "@/assets/styles/settings.style";
+import { createGlobalStyles } from "@/assets/styles/global.styles";
+import { radii, spacing, typography } from "@/constant/designToken";
 import { api } from "@/convex/_generated/api";
 import useTheme from "@/hooks/useTheme";
 
@@ -11,7 +13,48 @@ import { Ionicons } from "@expo/vector-icons";
 const DangerZone = () => {
   const { colors } = useTheme();
 
-  const settingsStyles = createSettingsStyles(colors);
+  const globalStyles = useMemo(() => createGlobalStyles(colors), [colors]);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        sectionTitleDanger: {
+          fontSize: typography.sectionTitle.fontSize,
+          fontWeight: typography.sectionTitle.fontWeight,
+          lineHeight: typography.sectionTitle.lineHeight,
+          letterSpacing: typography.sectionTitle.letterSpacing,
+          marginBottom: spacing.base,
+          color: colors.danger,
+        },
+        actionButton: {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingVertical: spacing.base,
+          borderBottomWidth: 1,
+          borderBottomColor: colors.borderSubtle,
+        },
+        actionLeft: {
+          flexDirection: "row",
+          alignItems: "center",
+          flex: 1,
+        },
+        actionIcon: {
+          width: 36,
+          height: 36,
+          borderRadius: radii.sm,
+          justifyContent: "center",
+          alignItems: "center",
+          marginRight: spacing.base,
+        },
+        actionTextDanger: {
+          fontSize: typography.bodyDefault.fontSize,
+          fontWeight: "600",
+          color: colors.danger,
+        },
+      }),
+    [colors.danger, colors.borderSubtle],
+  );
 
   const clearAllTodos = useMutation(api.todos.resetApp);
 
@@ -43,23 +86,23 @@ const DangerZone = () => {
   return (
     <LinearGradient
       colors={colors.gradients.surface}
-      style={settingsStyles.section}
+      style={globalStyles.section}
     >
-      <Text style={settingsStyles.sectionTitleDanger}>Danger Zone</Text>
+      <Text style={styles.sectionTitleDanger}>Danger Zone</Text>
 
       <TouchableOpacity
         activeOpacity={0.7}
-        style={[settingsStyles.actionButton, { borderBottomWidth: 0 }]}
+        style={[styles.actionButton, { borderBottomWidth: 0 }]}
         onPress={handleResetApp}
       >
-        <View style={settingsStyles.actionLeft}>
+        <View style={styles.actionLeft}>
           <LinearGradient
             colors={colors.gradients.danger}
-            style={settingsStyles.actionIcon}
+            style={styles.actionIcon}
           >
             <Ionicons color="#ffffff" name="trash" size={18} />
           </LinearGradient>
-          <Text style={settingsStyles.actionTextDanger}>Reset App</Text>
+          <Text style={styles.actionTextDanger}>Reset App</Text>
         </View>
         <Ionicons color={colors.textSecondary} name="chevron-forward" size={18} />
       </TouchableOpacity>

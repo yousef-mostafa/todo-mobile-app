@@ -1,8 +1,9 @@
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useMemo, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Switch, Text, View } from "react-native";
+import { StyleSheet, Switch, Text, View } from "react-native";
 
-import { createSettingsStyles } from "@/assets/styles/settings.style";
+import { createGlobalStyles } from "@/assets/styles/global.styles";
+import { radii, spacing, typography } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -22,7 +23,40 @@ const Preferences = () => {
 
   const { isDarkMode, toggleDarkMode, colors } = useTheme();
 
-  const settingsStyles = createSettingsStyles(colors);
+  const globalStyles = useMemo(() => createGlobalStyles(colors), [colors]);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        settingItem: {
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingVertical: spacing.base,
+          borderBottomWidth: 1,
+          borderBottomColor: colors.borderSubtle,
+        },
+        settingLeft: {
+          flexDirection: "row",
+          alignItems: "center",
+          flex: 1,
+        },
+        settingIcon: {
+          width: 36,
+          height: 36,
+          borderRadius: radii.sm,
+          justifyContent: "center",
+          alignItems: "center",
+          marginRight: spacing.base,
+        },
+        settingText: {
+          fontSize: typography.bodyDefault.fontSize,
+          fontWeight: "600",
+          color: colors.text,
+        },
+      }),
+    [colors.borderSubtle, colors.text],
+  );
 
   const items: PreferenceItem[] = [
     {
@@ -54,26 +88,26 @@ const Preferences = () => {
   return (
     <LinearGradient
       colors={colors.gradients.surface}
-      style={settingsStyles.section}
+      style={globalStyles.section}
     >
-      <Text style={settingsStyles.sectionTitle}>Preferences</Text>
+      <Text style={globalStyles.sectionTitle}>Preferences</Text>
 
       {items.map((item, index) => (
         <View
           key={item.key}
           style={[
-            settingsStyles.settingItem,
+            styles.settingItem,
             index === items.length - 1 && { borderBottomWidth: 0 },
           ]}
         >
-          <View style={settingsStyles.settingLeft}>
+          <View style={styles.settingLeft}>
             <LinearGradient
               colors={colors.gradients[item.color]}
-              style={settingsStyles.settingIcon}
+              style={styles.settingIcon}
             >
               <Ionicons color="#fff" name={item.icon} size={18} />
             </LinearGradient>
-            <Text style={settingsStyles.settingText}>{item.title}</Text>
+            <Text style={styles.settingText}>{item.title}</Text>
           </View>
           <Switch
             ios_backgroundColor={colors.border}

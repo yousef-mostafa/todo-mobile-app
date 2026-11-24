@@ -1,30 +1,45 @@
+import { useMemo } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { createSettingsStyles } from "@/assets/styles/settings.style";
+import { createGlobalStyles } from "@/assets/styles/global.styles";
 import DangerZone from "@/components/DangerZone";
 import Header from "@/components/Header";
 import Preferences from "@/components/Preferences";
 import ProgressStats from "@/components/ProgressStats";
+import { spacing } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
 const SettingsTab = () => {
   const { colors } = useTheme();
-  const style = createSettingsStyles(colors);
+
+  const globalStyles = useMemo(() => createGlobalStyles(colors), [colors]);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        content: {
+          paddingHorizontal: spacing.gutter,
+          gap: spacing.base,
+          paddingBottom: 120,
+        },
+      }),
+    [],
+  );
 
   return (
     <LinearGradient
       colors={colors.gradients.background}
-      style={style.container}
+      style={globalStyles.container}
     >
-      <SafeAreaView style={style.safeArea}>
+      <SafeAreaView style={globalStyles.safeArea}>
         <Header title="Settings" titleIcon="settings-outline" />
 
         <ScrollView
-          contentContainerStyle={style.content}
+          contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}
-          style={style.scrollView}
+          style={globalStyles.scrollView}
         >
           <ProgressStats />
           <Preferences />

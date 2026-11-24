@@ -1,32 +1,55 @@
+import { useMemo } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
-import { createHomeStyles } from "@/assets/styles/home.style.";
+import { createGlobalStyles } from "@/assets/styles/global.styles";
+import { spacing } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
 interface Props {
   showMessage?: boolean;
   message?: string;
-  size?: "small" | "large" | undefined;
+  size?: "small" | "large";
 }
 
 const LoadingSpinner = ({
   showMessage = false,
-  message,
-  size = "small",
+  message = "Loading...",
+  size = "large",
 }: Props) => {
   const { colors } = useTheme();
 
-  const homeStyles = createHomeStyles(colors);
+  const globalStyles = useMemo(() => createGlobalStyles(colors), [colors]);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        loadingContainer: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        loadingText: {
+          marginTop: spacing.lg,
+          fontSize: 16,
+          fontWeight: "500",
+          color: colors.text,
+          textAlign: "center",
+        },
+      }),
+    [colors.text],
+  );
 
   return (
     <LinearGradient
       colors={colors.gradients.background}
-      style={homeStyles.container}
+      style={globalStyles.container}
     >
-      <View style={homeStyles.loadingContainer}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator color={colors.primary} size={size} />
-        {showMessage && <Text style={homeStyles.loadingText}>{message}</Text>}
+        {showMessage && message ? (
+          <Text style={styles.loadingText}>{message}</Text>
+        ) : null}
       </View>
     </LinearGradient>
   );

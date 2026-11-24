@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation } from "convex/react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   ActivityIndicator,
   Alert,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 
-import { createHomeStyles } from "@/assets/styles/home.style.";
+import { createGlobalStyles } from "@/assets/styles/global.styles";
+import { radii, spacing, typography } from "@/constant/designToken";
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import useTheme from "@/hooks/useTheme";
@@ -21,7 +23,112 @@ type Todo = Doc<"todos">;
 
 const TodoCard = ({ item }: { item: Todo }) => {
   const { colors } = useTheme();
-  const style = createHomeStyles(colors);
+
+  const globalStyles = useMemo(() => createGlobalStyles(colors), [colors]);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        todoItemWrapper: {
+          marginVertical: spacing.xs,
+        },
+        todoItem: {
+          flexDirection: "row",
+          alignItems: "center",
+          padding: spacing.base,
+          borderRadius: radii.xl,
+          borderWidth: 1,
+          borderColor: colors.border,
+          shadowColor: colors.shadow,
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.08,
+          shadowRadius: 10,
+          elevation: 4,
+        },
+        checkbox: {
+          marginRight: spacing.md,
+        },
+        checkboxInner: {
+          width: 24,
+          height: 24,
+          borderRadius: radii.full,
+          borderWidth: 2,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        todoTextContainer: {
+          flex: 1,
+        },
+        todoText: {
+          fontSize: typography.bodyDefault.fontSize,
+          lineHeight: typography.bodyDefault.lineHeight,
+          fontWeight: typography.bodyDefault.fontWeight,
+          color: colors.text,
+          alignItems: "center",
+        },
+        todoTextCompleted: {
+          textDecorationLine: "line-through",
+          color: colors.textSecondary,
+          opacity: 0.5,
+        },
+        todoActions: {
+          flexDirection: "row",
+          alignItems: "center",
+          gap: spacing.sm,
+          marginLeft: spacing.sm,
+        },
+        actionButton: {
+          width: 36,
+          height: 36,
+          borderRadius: radii.full,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        editContainer: {
+          flex: 1,
+        },
+        editInput: {
+          borderWidth: 2,
+          borderRadius: radii.full,
+          paddingHorizontal: spacing.base,
+          paddingVertical: spacing.sm,
+          fontSize: typography.bodyDefault.fontSize,
+          fontWeight: typography.bodyDefault.fontWeight,
+          marginBottom: spacing.sm,
+          backgroundColor: colors.backgrounds.editInput,
+          borderColor: colors.primary,
+          color: colors.text,
+        },
+        editButtons: {
+          flexDirection: "row",
+          gap: spacing.sm,
+        },
+        editButton: {
+          flexDirection: "row",
+          alignItems: "center",
+          gap: spacing.xs,
+          paddingHorizontal: spacing.base,
+          paddingVertical: spacing.xs,
+          borderRadius: radii.full,
+        },
+        editButtonText: {
+          color: "#ffffff",
+          fontSize: 13,
+          fontWeight: typography.buttonText.fontWeight,
+        },
+      }),
+    [
+      colors.border,
+      colors.shadow,
+      colors.text,
+      colors.textSecondary,
+      colors.backgrounds.editInput,
+      colors.primary,
+    ],
+  );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -93,17 +200,17 @@ const TodoCard = ({ item }: { item: Todo }) => {
   }
 
   return (
-    <View style={style.todoItemWrapper}>
+    <View style={styles.todoItemWrapper}>
       <LinearGradient
         colors={colors.gradients.surface}
         end={{ x: 1, y: 1 }}
         start={{ x: 0, y: 0 }}
-        style={style.todoItem}
+        style={styles.todoItem}
       >
         {/* checkbox */}
         <TouchableOpacity
           activeOpacity={0.7}
-          style={style.checkbox}
+          style={styles.checkbox}
           onPress={handleToggleComplete}
         >
           {item.isCompleted ? (
@@ -114,7 +221,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
                   : colors.gradients.muted
               }
               style={[
-                style.checkboxInner,
+                styles.checkboxInner,
                 {
                   borderColor: item.isCompleted ? "transparent" : colors.border,
                 },
@@ -126,29 +233,29 @@ const TodoCard = ({ item }: { item: Todo }) => {
             </LinearGradient>
           ) : (
             <View
-              style={[style.checkboxInner, { borderColor: colors.border }]}
+              style={[styles.checkboxInner, { borderColor: colors.border }]}
             />
           )}
         </TouchableOpacity>
 
         {isEditing ? (
-          <View style={style.editContainer}>
+          <View style={styles.editContainer}>
             <TextInput
               autoFocus
               placeholder="Edit your task..."
               placeholderTextColor={colors.textSecondary}
-              style={style.editInput}
+              style={styles.editInput}
               value={editText}
               onChangeText={setEditText}
             />
-            <View style={style.editButtons}>
+            <View style={styles.editButtons}>
               <TouchableOpacity activeOpacity={0.8} onPress={handleSaveEdit}>
                 <LinearGradient
                   colors={colors.gradients.primary}
-                  style={style.editButton}
+                  style={styles.editButton}
                 >
                   <Ionicons color="#fff" name="checkmark" size={14} />
-                  <Text style={style.editButtonText}>Save</Text>
+                  <Text style={styles.editButtonText}>Save</Text>
                 </LinearGradient>
               </TouchableOpacity>
 
@@ -161,20 +268,20 @@ const TodoCard = ({ item }: { item: Todo }) => {
               >
                 <LinearGradient
                   colors={colors.gradients.muted}
-                  style={style.editButton}
+                  style={styles.editButton}
                 >
                   <Ionicons color="#fff" name="close" size={14} />
-                  <Text style={style.editButtonText}>Cancel</Text>
+                  <Text style={styles.editButtonText}>Cancel</Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>
           </View>
         ) : (
-          <View style={style.todoTextContainer}>
+          <View style={styles.todoTextContainer}>
             <Text
               style={[
-                style.todoText,
-                item.isCompleted && style.todoTextCompleted,
+                styles.todoText,
+                item.isCompleted && styles.todoTextCompleted,
               ]}
             >
               {item.text}
@@ -186,14 +293,14 @@ const TodoCard = ({ item }: { item: Todo }) => {
         )}
 
         {!isEditing && (
-          <View style={style.todoActions}>
+          <View style={styles.todoActions}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => setIsEditing(true)}
             >
               <LinearGradient
                 colors={colors.gradients.warning}
-                style={style.actionButton}
+                style={styles.actionButton}
               >
                 <Ionicons color="#fff" name="pencil" size={14} />
               </LinearGradient>
@@ -204,7 +311,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
             >
               <LinearGradient
                 colors={colors.gradients.danger}
-                style={style.actionButton}
+                style={styles.actionButton}
               >
                 <Ionicons color="#fff" name="trash" size={14} />
               </LinearGradient>
