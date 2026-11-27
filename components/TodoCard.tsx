@@ -11,7 +11,6 @@ import {
   View,
 } from "react-native";
 
-import { createGlobalStyles } from "@/assets/styles/global.styles";
 import { radii, spacing, typography } from "@/constant/designToken";
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
@@ -23,8 +22,6 @@ type Todo = Doc<"todos">;
 
 const TodoCard = ({ item }: { item: Todo }) => {
   const { colors } = useTheme();
-
-  const globalStyles = useMemo(() => createGlobalStyles(colors), [colors]);
 
   const styles = useMemo(
     () =>
