@@ -8,13 +8,13 @@ import { radii, spacing, typography } from "@/constant/designToken";
 import { api } from "@/convex/_generated/api";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 interface ProgressItem {
   key: string;
   color: "primary" | "success" | "warning";
   title: string;
-  icon: ComponentProps<typeof Ionicons>["name"];
+  icon: ComponentProps<typeof FontAwesome6>["name"];
   value: number;
 }
 
@@ -78,21 +78,21 @@ const ProgressStats = () => {
       key: "total",
       color: "primary",
       title: "Total Todos",
-      icon: "layers-outline",
+      icon: "layer-group",
       value: totalTodos,
     },
     {
       key: "completed",
       color: "success",
       title: "Completed",
-      icon: "checkmark-circle-outline",
+      icon: "circle-check",
       value: completedTodos,
     },
     {
       key: "active",
       color: "warning",
       title: "Active",
-      icon: "time-outline",
+      icon: "clock",
       value: activeTodos,
     },
   ];
@@ -116,7 +116,7 @@ const ProgressStats = () => {
                 colors={colors.gradients[item.color]}
                 style={styles.statIcon}
               >
-                <Ionicons color="#fff" name={item.icon} size={20} />
+                <FontAwesome6 color="#fff" name={item.icon} size={20} />
               </LinearGradient>
             </View>
 

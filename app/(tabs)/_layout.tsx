@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const TabsLayout = () => {
   const { colors, spacing, typography } = useTheme();
@@ -33,11 +33,7 @@ const TabsLayout = () => {
         options={{
           title: "Todos",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              color={color as string}
-              name="flash-outline"
-              size={size}
-            />
+            <FontAwesome6 color={color as string} name="bolt" size={size} />
           ),
         }}
       />
@@ -46,11 +42,7 @@ const TabsLayout = () => {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              color={color as string}
-              name="person-outline"
-              size={size}
-            />
+            <FontAwesome6 color={color as string} name="user" size={size} />
           ),
         }}
       />
@@ -59,11 +51,7 @@ const TabsLayout = () => {
         options={{
           title: "Settings",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              color={color as string}
-              name="settings-outline"
-              size={size}
-            />
+            <FontAwesome6 color={color as string} name="gear" size={size} />
           ),
         }}
       />

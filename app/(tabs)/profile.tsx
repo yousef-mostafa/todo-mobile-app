@@ -10,7 +10,7 @@ import { radii, spacing, typography } from "@/constant/designToken";
 import { api } from "@/convex/_generated/api";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const ProfileTab = () => {
   const { colors, isDarkMode } = useTheme();
@@ -180,7 +180,7 @@ const ProfileTab = () => {
       style={globalStyles.container}
     >
       <SafeAreaView style={globalStyles.safeArea}>
-        <Header title="Profile" titleIcon="person-outline" />
+        <Header title="Profile" titleIcon="user" />
 
         <ScrollView
           contentContainerStyle={styles.content}
@@ -195,16 +195,16 @@ const ProfileTab = () => {
               colors={colors.gradients.primary}
               style={styles.avatarWrapper}
             >
-              <Ionicons color="#ffffff" name="person" size={36} />
+              <FontAwesome6 color="#ffffff" name="user" size={36} />
             </LinearGradient>
 
             <Text style={styles.userName}>Productivity Pro</Text>
             <Text style={styles.userEmail}>user@taskflow.dev</Text>
 
             <View style={styles.badgePill}>
-              <Ionicons
+              <FontAwesome6
                 color={colors.primary}
-                name="shield-checkmark"
+                name="shield-halved"
                 size={14}
               />
               <Text style={styles.badgeText}>Verified Task Master</Text>

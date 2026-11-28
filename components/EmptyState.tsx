@@ -5,15 +5,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { spacing, typography } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 interface Props {
-  icon?: ComponentProps<typeof Ionicons>["name"];
+  icon?: ComponentProps<typeof FontAwesome6>["name"];
   title: string;
   subtitle?: string | undefined;
 }
 
-const EmptyState = ({ icon = "ban-outline", title, subtitle }: Props) => {
+const EmptyState = ({ icon = "ban", title, subtitle }: Props) => {
   const { colors } = useTheme();
 
   const styles = useMemo(
@@ -56,7 +56,7 @@ const EmptyState = ({ icon = "ban-outline", title, subtitle }: Props) => {
         colors={colors.gradients.empty}
         style={styles.emptyIconContainer}
       >
-        <Ionicons color={colors.textSecondary} name={icon} size={48} />
+        <FontAwesome6 color={colors.textSecondary} name={icon} size={48} />
       </LinearGradient>
       <Text style={styles.emptyText}>{title}</Text>
       {subtitle && <Text style={styles.emptySubtext}>{subtitle}</Text>}

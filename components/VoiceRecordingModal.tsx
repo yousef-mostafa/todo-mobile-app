@@ -18,7 +18,7 @@ import useAudio from "@/hooks/useAudio";
 import useSpeechLang from "@/hooks/useSpeechLang";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 interface Props {
   visible: boolean;
@@ -126,7 +126,7 @@ const VoiceRecordingModal = ({ visible, onClose, onSaveTranscript }: Props) => {
                       colors={colors.gradients.empty}
                       style={styles.closeButton}
                     >
-                      <Ionicons color="#000" name="close" size={18} />
+                      <FontAwesome6 color="#000" name="xmark" size={18} />
                     </LinearGradient>
                   </TouchableOpacity>
                 </View>
@@ -179,9 +179,13 @@ const VoiceRecordingModal = ({ visible, onClose, onSaveTranscript }: Props) => {
                         colors={colors.gradients.primary}
                         style={styles.micButton}
                       >
-                        <Ionicons
+                        <FontAwesome6
                           color="#ffffff"
-                          name={audio.isListening ? "mic" : "mic-off"}
+                          name={
+                            audio.isListening
+                              ? "microphone"
+                              : "microphone-slash"
+                          }
                           size={30}
                         />
                       </LinearGradient>
@@ -261,7 +265,7 @@ const VoiceRecordingModal = ({ visible, onClose, onSaveTranscript }: Props) => {
                       colors={colors.gradients.primary}
                       style={styles.actionBtn}
                     >
-                      <Ionicons color="#ffffff" name="checkmark" size={18} />
+                      <FontAwesome6 color="#ffffff" name="check" size={18} />
                       <Text style={styles.doneText}>Add Task</Text>
                     </LinearGradient>
                   </TouchableOpacity>

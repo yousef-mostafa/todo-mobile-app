@@ -6,13 +6,13 @@ import { createGlobalStyles } from "@/assets/styles/global.styles";
 import { radii, spacing, typography } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 interface PreferenceItem {
   key: string;
   color: "primary" | "success" | "warning";
   title: string;
-  icon: ComponentProps<typeof Ionicons>["name"];
+  icon: ComponentProps<typeof FontAwesome6>["name"];
   value: boolean;
   onChange: () => void;
 }
@@ -63,7 +63,7 @@ const Preferences = () => {
       key: "dark-mode",
       color: "primary",
       title: "Dark Mode",
-      icon: "moon-outline",
+      icon: "moon",
       value: isDarkMode,
       onChange: toggleDarkMode,
     },
@@ -71,7 +71,7 @@ const Preferences = () => {
       key: "notifications",
       color: "success",
       title: "Notifications",
-      icon: "notifications-outline",
+      icon: "bell",
       value: isNotificationsEnabled,
       onChange: () => setIsNotificationsEnabled((current) => !current),
     },
@@ -79,7 +79,7 @@ const Preferences = () => {
       key: "auto-sync",
       color: "warning",
       title: "Auto Sync",
-      icon: "sync-outline",
+      icon: "arrows-rotate",
       value: isAutoSync,
       onChange: () => setIsAutoSync((current) => !current),
     },
@@ -105,7 +105,7 @@ const Preferences = () => {
               colors={colors.gradients[item.color]}
               style={styles.settingIcon}
             >
-              <Ionicons color="#fff" name={item.icon} size={18} />
+              <FontAwesome6 color="#fff" name={item.icon} size={18} />
             </LinearGradient>
             <Text style={styles.settingText}>{item.title}</Text>
           </View>

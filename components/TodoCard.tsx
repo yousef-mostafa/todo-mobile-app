@@ -16,7 +16,7 @@ import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 type Todo = Doc<"todos">;
 
@@ -225,7 +225,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
               ]}
             >
               {item.isCompleted && (
-                <Ionicons color="#fff" name="checkmark" size={14} />
+                <FontAwesome6 color="#fff" name="check" size={14} />
               )}
             </LinearGradient>
           ) : (
@@ -251,7 +251,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
                   colors={colors.gradients.primary}
                   style={styles.editButton}
                 >
-                  <Ionicons color="#fff" name="checkmark" size={14} />
+                  <FontAwesome6 color="#fff" name="check" size={14} />
                   <Text style={styles.editButtonText}>Save</Text>
                 </LinearGradient>
               </TouchableOpacity>
@@ -267,7 +267,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
                   colors={colors.gradients.muted}
                   style={styles.editButton}
                 >
-                  <Ionicons color="#fff" name="close" size={14} />
+                  <FontAwesome6 color="#fff" name="xmark" size={14} />
                   <Text style={styles.editButtonText}>Cancel</Text>
                 </LinearGradient>
               </TouchableOpacity>
@@ -299,7 +299,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
                 colors={colors.gradients.warning}
                 style={styles.actionButton}
               >
-                <Ionicons color="#fff" name="pencil" size={14} />
+                <FontAwesome6 color="#fff" name="pencil" size={14} />
               </LinearGradient>
             </TouchableOpacity>
             <TouchableOpacity
@@ -310,7 +310,7 @@ const TodoCard = ({ item }: { item: Todo }) => {
                 colors={colors.gradients.danger}
                 style={styles.actionButton}
               >
-                <Ionicons color="#fff" name="trash" size={14} />
+                <FontAwesome6 color="#fff" name="trash" size={14} />
               </LinearGradient>
             </TouchableOpacity>
           </View>

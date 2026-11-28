@@ -8,7 +8,7 @@ import { radii, spacing, typography } from "@/constant/designToken";
 import { api } from "@/convex/_generated/api";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const DangerZone = () => {
   const { colors } = useTheme();
@@ -100,11 +100,15 @@ const DangerZone = () => {
             colors={colors.gradients.danger}
             style={styles.actionIcon}
           >
-            <Ionicons color="#ffffff" name="trash" size={18} />
+            <FontAwesome6 color="#ffffff" name="trash" size={18} />
           </LinearGradient>
           <Text style={styles.actionTextDanger}>Reset App</Text>
         </View>
-        <Ionicons color={colors.textSecondary} name="chevron-forward" size={18} />
+        <FontAwesome6
+          color={colors.textSecondary}
+          name="chevron-right"
+          size={18}
+        />
       </TouchableOpacity>
     </LinearGradient>
   );

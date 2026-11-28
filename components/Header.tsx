@@ -6,11 +6,11 @@ import { createGlobalStyles } from "@/assets/styles/global.styles";
 import { spacing, typography } from "@/constant/designToken";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 interface Props {
   title: string;
-  titleIcon: ComponentProps<typeof Ionicons>["name"];
+  titleIcon: ComponentProps<typeof FontAwesome6>["name"];
   subtitle?: string;
   children?: ReactNode;
 }
@@ -53,7 +53,7 @@ const Header = ({ title, titleIcon, subtitle, children }: Props) => {
           colors={colors.gradients.primary}
           style={globalStyles.iconContainer}
         >
-          <Ionicons color={"#fff"} name={titleIcon} size={24} />
+          <FontAwesome6 color="#fff" name={titleIcon} size={24} />
         </LinearGradient>
 
         <View style={globalStyles.fullWidthContainer}>

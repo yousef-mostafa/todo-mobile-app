@@ -92,7 +92,7 @@ export default function Index() {
         <Header
           subtitle={`${completedCount} of ${totalCount} Complete`}
           title="Today's Tasks"
-          titleIcon="flash-outline"
+          titleIcon="bolt"
         >
           <View style={styles.progressContainer}>
             <View style={styles.progressBarContainer}>
@@ -118,7 +118,7 @@ export default function Index() {
           keyExtractor={(item) => item._id}
           ListEmptyComponent={
             <EmptyState
-              icon="clipboard-outline"
+              icon="clipboard"
               subtitle="Add your first todo above to get started"
               title="No todos yet!"
             />

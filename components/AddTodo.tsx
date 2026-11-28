@@ -7,7 +7,7 @@ import { radii } from "@/constant/designToken";
 import { api } from "@/convex/_generated/api";
 import useTheme from "@/hooks/useTheme";
 
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const AddTodo = () => {
   const { colors } = useTheme();
@@ -63,7 +63,7 @@ const AddTodo = () => {
         style={styles.addButton}
         onPress={() => setIsVoiceModalVisible(true)}
       >
-        <Ionicons color={colors.surface} name="add" size={20} />
+        <FontAwesome6 color={colors.surface} name="plus" size={20} />
       </TouchableOpacity>
 
       {/* Voice Recording Modal */}
